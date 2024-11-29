@@ -1,7 +1,11 @@
 package com.example.blog.board;
 
 import com.example.blog._core.util.MyDate;
+import com.example.blog.user.User;
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.Data;
+
+import java.util.Objects;
 
 public class BoardResponse {
 
@@ -27,11 +31,22 @@ public class BoardResponse {
         private String content;
         private String createdAt;
 
-        public DetailDTO(Board board) {
+        private Integer userId;
+        private String userName;
+        private boolean isOwner = false;
+
+        public DetailDTO(Board board, User sessionUser) {
             this.id = board.getId();
             this.title = board.getTitle();
             this.content = board.getContent();
             this.createdAt = MyDate.formatToStr(board.getCreatedAt());
+
+            this.userId = board.getUser().getId();
+            this.userName = board.getUser().getUsername(); // Lazy Loading
+
+            if (sessionUser != null) {
+                this.isOwner = Objects.equals(board.getUser().getId(), sessionUser.getId());
+            }
         }
     }
 

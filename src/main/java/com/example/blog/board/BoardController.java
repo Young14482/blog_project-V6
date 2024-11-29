@@ -1,5 +1,7 @@
 package com.example.blog.board;
 
+import com.example.blog.user.User;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final HttpSession session;
 
     @PostMapping("/board/save")
     public String save(@Valid BoardRequest.SaveDTO saveDTO, Errors errors) {
@@ -37,22 +40,23 @@ public class BoardController {
 
     @GetMapping("/board/save-form")
     public String saveForm() {
-        return "save-form";
+        return "/board/save-form";
     }
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable("id") int id, Model model) {
         BoardResponse.UpdateFormDTO updateFormDTO = boardService.게시글수정화면보기(id);
         model.addAttribute("model", updateFormDTO);
-        return "update-form";
+        return "/board/update-form";
     }
 
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable("id") int id, Model model) {
-        BoardResponse.DetailDTO boardDetail = boardService.게시글상세보기(id);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        BoardResponse.DetailDTO boardDetail = boardService.게시글상세보기(id, sessionUser);
         model.addAttribute("model", boardDetail);
-        return "detail";
+        return "/board/detail";
     }
 
     @GetMapping("/")

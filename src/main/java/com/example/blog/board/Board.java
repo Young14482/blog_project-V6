@@ -19,7 +19,7 @@ public class Board {
     private String title;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @CreationTimestamp

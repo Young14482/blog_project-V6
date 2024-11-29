@@ -1,13 +1,10 @@
 package com.example.blog.board;
 
-import com.example.blog._core.error.ex.Exception400;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +59,7 @@ public class BoardController {
     public String list(Model model) { // DS(request객체를 model이라는 객체로 랩핑해서 전달해준다)
         List<BoardResponse.DTO> boardList = boardService.게시글목록보기();
         model.addAttribute("models", boardList);
-        return "list";
+        return "index";
     }
 }
 

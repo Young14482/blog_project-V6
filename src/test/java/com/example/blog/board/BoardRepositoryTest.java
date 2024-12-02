@@ -15,6 +15,14 @@ public class BoardRepositoryTest { // 클래스 명 뒤에 Test를 붙이는게 
     BoardRepository boardRepository;
 
     @Test
+    public void findByIdJoinUser_test() {
+        int id = 1;
+
+//        Board byIdJoinUser = boardRepository.findByIdJoinUser(id);
+    }
+
+
+    @Test
     public void findById_test() {
         // given
         Integer id = 1;

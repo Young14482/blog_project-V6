@@ -24,9 +24,9 @@ public class UserController {
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
+
     @PostMapping("/join")
     public String join(UserRequest.JoinDTO joinDTO) {
-return null;
-
+        return null;
     }
 }

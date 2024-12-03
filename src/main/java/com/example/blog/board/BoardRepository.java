@@ -16,6 +16,20 @@ public class BoardRepository {
 
     private final EntityManager em;
 
+    public Optional<Board> findByIdJoinUserAndReply(int id) {
+        String sql = """
+                select b from Board b join fetch b.user left join fetch b.replies r left join fetch  r.user where b.id = :id
+                """;
+        Query  q = em.createQuery(sql, Board.class);
+        q.setParameter("id", id);
+        try {
+            Board board = (Board) q.getSingleResult();
+            return Optional.of(board);
+        } catch (RuntimeException e) {
+            return Optional.ofNullable(null);
+        }
+    }
+
     public Optional<Board> findByIdJoinUser(int id) {
         String sql = """
                 select b from Board b join fetch b.user where b.id = :id

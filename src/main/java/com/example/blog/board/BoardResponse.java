@@ -1,10 +1,11 @@
 package com.example.blog.board;
 
 import com.example.blog._core.util.MyDate;
+import com.example.blog.reply.Reply;
 import com.example.blog.user.User;
-import jdk.swing.interop.SwingInterOpUtils;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Objects;
 
 public class BoardResponse {
@@ -32,8 +33,25 @@ public class BoardResponse {
         private String createdAt;
 
         private Integer userId;
-        private String userName;
+        private String username;
         private boolean isOwner = false;
+
+        private List<ReplyDTO> replies;
+
+        @Data
+        class ReplyDTO {
+            private int id;
+            private String comment;
+            private int userId;
+            private String username;
+
+            public ReplyDTO(Reply reply) {
+                this.id = reply.getId();
+                this.comment = reply.getComment();
+                this.userId = reply.getUser().getId();
+                this.username = reply.getUser().getUsername();
+            }
+        }
 
         public DetailDTO(Board board, User sessionUser) {
             this.id = board.getId();
@@ -42,11 +60,12 @@ public class BoardResponse {
             this.createdAt = MyDate.formatToStr(board.getCreatedAt());
 
             this.userId = board.getUser().getId();
-            this.userName = board.getUser().getUsername(); // Lazy Loading
+            this.username = board.getUser().getUsername(); // Lazy Loading
 
             if (sessionUser != null) {
                 this.isOwner = Objects.equals(board.getUser().getId(), sessionUser.getId());
             }
+            this.replies = board.getReplies().stream().map(r -> new ReplyDTO(r)).toList();
         }
     }
 

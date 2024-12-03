@@ -15,6 +15,14 @@ public class BoardRepositoryTest { // 클래스 명 뒤에 Test를 붙이는게 
     BoardRepository boardRepository;
 
     @Test
+    public void findByIdJoinUserAndReply_test() {
+        int id = 1;
+
+      boardRepository.findByIdJoinUserAndReply(id);
+    }
+
+
+    @Test
     public void findByIdJoinUser_test() {
         int id = 1;
 
@@ -32,9 +40,7 @@ public class BoardRepositoryTest { // 클래스 명 뒤에 Test를 붙이는게 
         Board board = boardOP.get();
 
         // eye
-        System.out.println("레이지 직전");
-        String title = board.getUser().getUsername();
-        System.out.println("레이지 직후");
+
     }
 
     @Test

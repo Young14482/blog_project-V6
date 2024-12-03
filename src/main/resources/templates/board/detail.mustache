@@ -10,12 +10,20 @@
     </form>
     {{/model.isOwner}}
     <div>
-        작성자 : ssar <br>
+        작성자 : {{model.username}} <br>
         번호 : {{model.id}} <br>
         제목 : {{model.title}} <br>
         내용 : {{model.content}} <br>
         작성일 : {{model.createdAt}} <br>
     </div>
+</section>
+
+<section>
+    <h2>댓글</h2>
+    <hr>
+    {{#model.replies}}
+        <div>번호: {{id}}, 내용: {{comment}}, 작성자: {{username}} <button>삭제</button></div>
+    {{/model.replies}}
 </section>
 
 </body>

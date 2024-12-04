@@ -25,7 +25,7 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // fk의 변수명 적어주기
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY) // fk의 변수명 적어주기
     private List<Reply> replies = new ArrayList<Reply>();
     
     @CreationTimestamp

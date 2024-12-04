@@ -22,7 +22,7 @@
     <h2>댓글</h2>
     <hr>
     {{#model.replies}}
-        <div>번호: {{id}}, 내용: {{comment}}, 작성자: {{username}} <button>삭제</button></div>
+        <div> 번호 : {{id}}, 내용 : {{comment}}, 작성자 : {{username}} {{#isOwner}}<button>삭제</button>{{/isOwner}}</div>
     {{/model.replies}}
 </section>
 

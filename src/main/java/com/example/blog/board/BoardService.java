@@ -1,6 +1,8 @@
 package com.example.blog.board;
 
+import com.example.blog._core.error.ex.Exception403;
 import com.example.blog._core.error.ex.Exception404;
+import com.example.blog.reply.ReplyRepository;
 import com.example.blog.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     public List<BoardResponse.DTO> 게시글목록보기() {
         return boardRepository.findAll().stream()
@@ -40,7 +43,14 @@ public class BoardService {
     }
 
     @Transactional
-    public void 게시글삭제(int id) {
+    public void 게시글삭제(int id, User sessionUser) {
+        Board boardPS = boardRepository.findById(id)
+                .orElseThrow(() -> new Exception404("게시글 아이디를 찾을 수 없습니다."));
+        if(!sessionUser.getId().equals(boardPS.getUser().getId())) {
+            throw new Exception403("권한이 없습니다");
+        }
+        //replyRepository.deleteAll(boardPS.getId());
+        replyRepository.updateNull(boardPS.getId());
         boardRepository.delete(id);
     } // commit or rollback 이 됨.
 

@@ -21,6 +21,8 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
